@@ -1,0 +1,147 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <url>${url.base}/${project.artifactId}</url>
+    <groupId>ru.rmm.xml</groupId>
+    <artifactId>xmlToElastic</artifactId>
+    <packaging>jar</packaging>
+    <version>0.2.1</version>
+    <description>Tool for </description>
+
+
+
+<dependencies>
+
+<dependency>
+    <groupId>org.elasticsearch.client</groupId>
+    <artifactId>elasticsearch-rest-high-level-client</artifactId>
+    <version>6.4.0</version>
+</dependency>
+
+<dependency>
+  <groupId>org.json</groupId>
+  <artifactId>json</artifactId>
+  <version>20180813</version>
+</dependency>
+
+<dependency>
+  <groupId>com.beust</groupId>
+  <artifactId>jcommander</artifactId>
+  <version>1.72</version>
+</dependency>
+
+</dependencies>
+
+    <repositories>
+        <repository>
+            <id>nexus-repo</id>
+            <name>Nexus repo</name>
+            <url>http://sclauncher.ru/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus-repo</id>
+            <name>Nexus repo</name>
+            <url>http://sclauncher.ru/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+<distributionManagement>  
+ <!-- Publish the versioned releases here -->  
+
+      <repository>
+        <id>nexus-repo</id>
+        <name>Nexus repo</name>
+        <url>http://sclauncher.ru/nexus/content/repositories/releases</url>
+
+        <!--releases>
+          <enabled>true</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots-->
+      </repository>
+
+
+</distributionManagement> 
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+	    <plugin>
+	      <artifactId>maven-idea-plugin</artifactId>
+	        <configuration>
+	          <jdkName>1.8</jdkName>
+	        </configuration>
+	      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <minimizeJar>true</minimizeJar>
+			    <filters> 
+                		<filter>
+					<artifact>commons-logging:commons-logging</artifact>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </filter>
+                    <filter>
+                        <artifact>ch.qos.logback:logback-core</artifact>
+					<includes>
+						<include>**</include>
+	        			</includes>
+				</filter>
+			    </filters>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                                    <Main-Class>ru.rmm.xml.Main</Main-Class>
+                  </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
