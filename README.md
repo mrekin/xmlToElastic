@@ -3,6 +3,7 @@
 Simple batch tool to load set of xml files to Elasticsearch.
 xmlToElastic uses **JSON** library to convert xml to json and **elasticsearch-rest-high-level-client** to load result to Elastic.
 
+Download *fat* jar, run it.
 *Use **-h** option to see avaliable parameters.*
 
 TODO list:
