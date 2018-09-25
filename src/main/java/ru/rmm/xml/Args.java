@@ -12,11 +12,10 @@ public class Args {
     private boolean help;
 
     private String helpMessage = "";
-    // TBD need to implement
-    /*
-    @Parameter(names = "--xml2json", description = "Only converts xml to json and saves it in source directory",  order = 1)
+
+    @Parameter(names = "--xml2json", description = "Save result json in output directory",  order = 1)
     private boolean xml2json = false;
-    */
+
     @Parameter(names = "--keepStrings", description = "Keepstring key for Json generation",  order = 2)
     private boolean keepStrings = true;
 
@@ -25,6 +24,9 @@ public class Args {
 
     @Parameter(names = {"-d","--directory"}, description = "XML source directory",  order = 4)
     private String directory = ".";
+
+    @Parameter(names = {"-o","--outDirectory"}, description = "XML source directory. If not set - equals to input directory",  order = 4)
+    private String outDirectory = ".";
 
     @Parameter(names = "--server", description = "Elactic server URI ",  order = 5)
     private String server = "http://localhost:9200";
@@ -58,11 +60,6 @@ public class Args {
         return help;
     }
 
-    //TBD need to implement
-   /* public boolean getXml2json() {
-        return xml2json;
-    }
-    */
     public boolean isXml2elastic() {
         return xml2elastic;
     }
@@ -101,5 +98,17 @@ public class Args {
 
     public boolean isUpsert() {
         return upsert;
+    }
+
+    public boolean isXml2json() {
+        return xml2json;
+    }
+
+    public String getOutDirectory() {
+        return outDirectory;
+    }
+
+    public void setOutDirectory(String outDirectory) {
+        this.outDirectory = outDirectory;
     }
 }
